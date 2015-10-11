@@ -14,18 +14,11 @@ class M26AgeCalculatorTest(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_constructor(self):
-        self.assertTrue(0 == 0, "value should be 0")
+    def test_milliseconds_per_year(self):
+        self.assertTrue(M26AgeCalculator.milliseconds_per_year() == 31557600000.0, "value should be 31557600000.0")
 
-    
-# describe 'AgeCalculator', ->
-
-#   it "should define milliseconds_per_year", ->
-#     expect(AgeCalculator.milliseconds_per_year()).toEqual(31557600000)
-
-#   it "should calculate and construct and Age", ->
-#     a1 = AgeCalculator.calculate('1960-10-01', '2014-10-01')
-#     a2 = AgeCalculator.calculate('2013-11-01')
-#     expect(a1.val()).isWithin(0.01, 54.0)
-#     expect(a2.val()).toBeGreaterThan(0.999)
-#     expect(a2.val()).toBeLessThan(2) # TODO - update before November 2015
+    def test_calculate(self):
+        a1 = M26AgeCalculator.calculate('1960-10-01', '2015-10-01')
+        actual = 54.997946611909654
+        self.assertTrue(a1.value > (actual - 0.000001), "value is too small")
+        self.assertTrue(a1.value < (actual + 0.000001), "value is too large")

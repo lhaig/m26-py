@@ -37,7 +37,7 @@ setup(
         'Development Status :: 3 - Alpha',
 
         'Intended Audience :: Developers',
-        'Topic :: Sports :: Calculators',
+        'Topic :: Utilities',
 
         'License :: OSI Approved :: MIT License',
 

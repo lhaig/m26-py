@@ -1,12 +1,16 @@
-exclude build.xml
 exclude personal.txt
-exclude pip_upgrade.sh
-exclude tests.sh
+exclude pyvenv.cfg
 
+exclude *.json
+exclude *.sh
+exclude *.txt
+exclude *.xml
+
+prune   bin
 prune   coverage
 
 include README.rst
-
-
 include LICENSE
+
+
 recursive-include tests *.py

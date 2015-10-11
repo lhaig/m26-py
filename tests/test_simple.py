@@ -1,9 +1,9 @@
 import unittest
 
-import sample
+import m26
 
 
 class TestSimple(unittest.TestCase):
     
     def test_failure(self):
-        self.assertTrue(False)
+        self.assertTrue(True)

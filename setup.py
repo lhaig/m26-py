@@ -42,8 +42,6 @@ setup(
         'License :: OSI Approved :: MIT License',
 
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.2',
-        'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
     ],
@@ -52,7 +50,7 @@ setup(
 
     # You can just specify the packages manually here if your project is simple.
     # Or you can use find_packages().
-    packages=find_packages(exclude=['contrib', 'data', 'docs', 'tests*']),
+    packages=find_packages(exclude=['bin', 'contrib', 'coverage', 'data', 'docs', 'tests*']),
 
     # Run-time dependencies; these will be installed by pip when the project is installed.
     # See https://packaging.python.org/en/latest/requirements.html

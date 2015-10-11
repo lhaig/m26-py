@@ -8,43 +8,35 @@ import os.path
 
 class M26Age(object):
 
-  def __init__(self):
-    self.value = 0
+    def __init__(self, n=0.0):
+        self.value = float(n)
 
+    def max_pulse(self):
+        if self.value < 20:
+            return 200.0
+        else:
+            return 220.0 - self.value
 
+    def add(self, another_instance):
+        if another_instance:
+            self.value = self.value + another_instance.value
+        return self.value
 
-# class Age
+    def subtract(self, another_instance):
+        if another_instance:
+            self.value = self.value - another_instance.value
+        return self.value
 
-#   constructor: (n) ->
-#     @value = parseFloat(n)
-
-#   val: ->
-#     @value
-
-#   max_pulse: ->
-#     if @val() <= 20
-#       200.0
-#     else
-#       220.0 - @val()
-
-#   add: (another_instance) ->
-#     if another_instance
-#       @val() + another_instance.val()
-
-#   subtract: (another_instance) ->
-#     if another_instance
-#       @val() - another_instance.val()
-
-#   training_zones: ->
-#     results = []
-#     zones   = [ 0.95, 0.90, 0.85, 0.80, 0.75 ]
-#     max     = this.max_pulse()
-#     for pct, idx in zones
-#       tuple      = {}
-#       tuple.zone = idx + 1
-#       tuple.age  = this.val()
-#       tuple.max  = max
-#       tuple.pct_max = pct
-#       tuple.pulse   = Math.round(max * pct)
-#       results.push(tuple)
-#     results
+    def training_zones(self):
+        results = list()
+        zones   = [ 0.95, 0.90, 0.85, 0.80, 0.75 ]
+        max     = self.max_pulse()
+        for idx, pct in enumerate(zones):
+            data = dict()
+            data['zone']    = idx + 1
+            data['age']     = self.value
+            data['max']     = self.max_pulse()
+            data['pct_max'] = pct
+            data['pulse']   = self.max_pulse() * pct
+            results.append(data)
+        return results

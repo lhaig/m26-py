@@ -1,4 +1,5 @@
 
+import json
 import os
 import time
 import unittest
@@ -14,54 +15,45 @@ class M26AgeTest(unittest.TestCase):
     def tearDown(self):
         pass
 
+    def write_tmp_file(self, basename, contents):
+        with open('tmp/' + basename, 'w', encoding='utf-8') as out:
+            out.write(contents)
+            print('tmp/ file written: ' + basename)
+
     def test_constructor(self):
-        a = M26Age()
-        self.assertTrue(a.value == 0, "value should be 0")
+        self.assertTrue(M26Age().value == 0, "value should be 0")
+        self.assertTrue(M26Age().value == 0, "value should be 0")
+        self.assertTrue(M26Age(58.1).value == 58.1, "value should be 58.1")
+        self.assertTrue(M26Age('58.2').value == 58.2, "value should be 58.2")
 
+    def test_max_pulse(self):
+        self.assertTrue(M26Age(16).max_pulse() == 200.0, "value should be 200.0")
+        self.assertTrue(M26Age(20).max_pulse() == 200.0, "value should be 200.0")
+        self.assertTrue(M26Age(21).max_pulse() == 199.0, "value should be 199.0")
+        self.assertTrue(M26Age(58.1).max_pulse() == 161.9, "value should be 161.9")
 
-# describe 'Age', ->
+    def test_subtract(self):
+        a16 = M26Age(16.0)
+        a58 = M26Age(58.0)
+        self.assertTrue(a58.add(a16) == 74.0, "value should be 74.0")
+        self.assertTrue(a58.value == 74.0, "value should be 74.0")
 
-#   it "should construct with either a String or Number arg", ->
-#     a1 = new Age(44.4)
-#     a2 = new Age('55.5')
-#     expect(a1.val()).isWithin(0.0000000001, 44.4)
-#     expect(a2.val()).isWithin(0.0000000001, 55.5)
+    def test_subtract(self):
+        a16 = M26Age(16.0)
+        a58 = M26Age(58.0)
+        self.assertTrue(a58.subtract(a16) == 42.0, "value should be 42.0")
+        self.assertTrue(a58.value == 42.0, "value should be 42.0")
 
-#   it "should calculate max_pulse", ->
-#     a16 = new Age(16)
-#     a20 = new Age('20')
-#     a21 = new Age(21)
-#     a36 = new Age(36)
-#     a57 = new Age('57')
-#     expect(a16.max_pulse()).isWithin(0.0000000001, 200.0)
-#     expect(a20.max_pulse()).isWithin(0.0000000001, 200.0)
-#     expect(a21.max_pulse()).isWithin(0.0000000001, 199.0)
-#     expect(a36.max_pulse()).isWithin(0.0000000001, 184.0)
-#     expect(a57.max_pulse()).isWithin(0.0000000001, 163.0)
+    def test_training_zones(self):
+        a58 = M26Age(58.0)
+        zones = a58.training_zones()
+        self.write_tmp_file('training_zones.json', json.dumps(zones, indent=True))
+        self.assertTrue(len(zones) == 5, "there should be 5 zones")
+        z0 = zones[0]
+        z4 = zones[4]
 
-#   it "should add and subtract", ->
-#     a16  = new Age(16.9)
-#     a57  = new Age(57.1)
-#     sum  = a57.add(a16)
-#     diff = a57.subtract(a16)
-#     expect(sum).isWithin(0.0000000001, 74.0)
-#     expect(diff).isWithin(0.0000000001, 40.2)
+        self.assertTrue(z0['pct_max'] == 0.95, "pct_max should be 0.95")
+        self.assertTrue(z0['pulse']   == 153.9, "pulse should be 153.9")
 
-#   it "should calculate heart-rate training-zones", ->
-#     a57   = new Age(57.1)
-#     zones = a57.training_zones()
-#     # console.log(JSON.stringify(zones, null, 2))
-#     expect(zones.length).toBe(5)
-#     z1 = zones[0]
-#     z5 = zones[4]
-#     expect(z1.zone).toBe(1)
-#     expect(z1.pulse).toBe(155)
-#     expect(z1.age).isWithin(0.001, 57.1)
-#     expect(z1.pct_max).isWithin(0.001, 0.95)
-#     expect(z1.max).isWithin(0.001, 162.9)
-
-#     expect(z5.zone).toBe(5)
-#     expect(z5.pulse).toBe(122)
-#     expect(z5.age).isWithin(0.001, 57.1)
-#     expect(z5.pct_max).isWithin(0.001, 0.75)
-#     expect(z5.max).isWithin(0.001, 162.9)
+        self.assertTrue(z4['pct_max'] == 0.75, "pct_max should be 0.75")
+        self.assertTrue(z4['pulse']   == 121.5, "pulse should be 121.5")

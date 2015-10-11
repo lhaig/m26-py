@@ -15,7 +15,7 @@ setup(
     name='m26',
 
     # Versions should comply with PEP440.  
-    version='0.0.1',  
+    version='0.0.2',  
 
     description='m26 is a python library for speed and pace calculations for sports like running and cycling',
     long_description=long_description,

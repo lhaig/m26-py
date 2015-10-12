@@ -32,7 +32,7 @@ class M26AgeTest(unittest.TestCase):
         self.assertTrue(M26Age(21).max_pulse() == 199.0, "value should be 199.0")
         self.assertTrue(M26Age(58.1).max_pulse() == 161.9, "value should be 161.9")
 
-    def test_subtract(self):
+    def test_add(self):
         a16 = M26Age(16.0)
         a58 = M26Age(58.0)
         self.assertTrue(a58.add(a16) == 74.0, "value should be 74.0")

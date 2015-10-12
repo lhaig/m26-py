@@ -10,7 +10,7 @@ from m26.m26_age import M26Age
 class M26AgeTest(unittest.TestCase):
 
     def setUp(self):
-        self.epoch = str(int(time.time()))
+        pass
 
     def tearDown(self):
         pass

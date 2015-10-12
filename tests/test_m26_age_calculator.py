@@ -9,7 +9,7 @@ from m26.m26_age_calculator import M26AgeCalculator
 class M26AgeCalculatorTest(unittest.TestCase):
 
     def setUp(self):
-        self.epoch = str(int(time.time()))
+        pass
 
     def tearDown(self):
         pass

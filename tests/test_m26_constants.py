@@ -9,7 +9,7 @@ from m26.m26_constants import M26Constants
 class M26ConstantsTest(unittest.TestCase):
 
     def setUp(self):
-        self.epoch = str(int(time.time()))
+        pass
 
     def tearDown(self):
         pass

@@ -1,45 +1,49 @@
 __author__ = 'cjoakim'
 
-import os
+import math
+
+from .m26_distance     import M26Distance
+from .m26_elapsed_time import M26ElapsedTime
 
 
 class M26Speed(object):
 
-  def __init__(self):
-    self.value = 0
+    def __init__(self, d, et):
+        self.dist  = d    # an instance of M26Distance
+        self.etime = et   # an instance of M26ElapsedTime
 
+    def mph(self):
+        return self.dist.as_miles() / self.etime.hours()
 
-# class Speed
+    def kph(self):
+        return self.dist.as_kilometers() / self.etime.hours()
 
-#   constructor: (d, et) ->
-#     [@d, @et] = [d, et]
+    def yph(self):
+        return self.dist.as_yards() / self.etime.hours()
 
-#   mph: ->
-#     @d.as_miles() / @et.hours()
+    def pace_per_mile(self):
+        spm = self.seconds_per_mile()
+        mm  = math.floor(spm / 60.0)
+        ss  = spm - (mm * 60.0)
 
-#   kph: ->
-#     @d.as_kilometers() / @et.hours()
+        if ss < 10:
+            ss = "0{0}".format(ss)
+        else:
+            ss = "{0}".format(ss)
 
-#   yph: ->
-#     @d.as_yards() / @et.hours()
+        if len(ss) > 5:
+            ss = ss[0:5]
 
-#   pace_per_mile: ->
-#     spm = @seconds_per_mile()
-#     mm  = Math.floor(spm / 60.0)
-#     ss  = spm - (mm * 60)
+        return "{0}:{1}".format(mm, ss)
 
-#     if ss < 10
-#       ss = '0' + ss
-#     else
-#       ss = '' + ss
+    def seconds_per_mile(self):
+        return float(self.etime.secs / self.dist.as_miles())
 
-#     if ss.length > 5
-#       ss = ss.substring(0, 5)
+    def projected_time(self, another_distance, algorithm='simple'):
+        pass
 
-#     '' + mm + ':' + ss
-
-#   seconds_per_mile: ->
-#     @et.secs / @d.as_miles()
+    def age_graded(self, event_age, graded_age):
+        pass
 
 #   projected_time: (another_distance, algorithm='simple') ->
 #     if algorithm is 'riegel'

@@ -9,7 +9,7 @@ from m26.m26_run_walk_calculator import M26RunWalkCalculator
 class M26RunWalkCalculatorTest(unittest.TestCase):
 
     def setUp(self):
-        self.epoch = str(int(time.time()))
+        pass
 
     def tearDown(self):
         pass

@@ -9,7 +9,7 @@ from m26.m26_elapsed_time import M26ElapsedTime
 class M26ElapsedTimeTest(unittest.TestCase):
 
     def setUp(self):
-        self.epoch = str(int(time.time()))
+        pass
 
     def tearDown(self):
         pass

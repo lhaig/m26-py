@@ -14,6 +14,9 @@ class M26AgeCalculatorTest(unittest.TestCase):
     def tearDown(self):
         pass
 
+    def test_seconds_per_year(self):
+        self.assertTrue(M26AgeCalculator.seconds_per_year() == 31557600.0, "value should be 31557600.0")
+
     def test_milliseconds_per_year(self):
         self.assertTrue(M26AgeCalculator.milliseconds_per_year() == 31557600000.0, "value should be 31557600000.0")
 

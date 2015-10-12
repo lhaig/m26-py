@@ -8,12 +8,12 @@ from .m26_age import M26Age
 class M26AgeCalculator(object):
 
     @classmethod
-    def milliseconds_per_year(self):
-        return float(31557600000.0)  # 1000 * 60 * 60 * 24 * 365.25
+    def seconds_per_year(cls):
+        return float(31557600.0)  # 60 * 60 * 24 * 365.25
 
     @classmethod
-    def seconds_per_year(self):
-        return float(31557600.0)  # 60 * 60 * 24 * 365.25
+    def milliseconds_per_year(cls):
+        return float(cls.seconds_per_year() * 1000.0)
 
     @classmethod
     def calculate(self, birth_yyyy_mm_dd, as_of_yyyy_mm_dd):
@@ -25,10 +25,6 @@ class M26AgeCalculator(object):
                 asof_ts  = asof_date.timestamp
                 diff     = float(asof_ts - birth_ts)
                 years    = diff / self.seconds_per_year()
-                print("birth_ts: {0}".format(birth_ts))
-                print("asof_ts:  {0}".format(asof_ts))
-                print("diff:     {0}".format(diff))
-                print("years:    {0}".format(years))
                 return M26Age(years)
         else:
             return None

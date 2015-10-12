@@ -1,62 +1,69 @@
 __author__ = 'cjoakim'
 
-import os
+from .m26_constants import M26Constants
 
 
 class M26Distance(object):
 
-  def __init__(self):
-    self.value = 0
+    def __init__(self, dist=0.0, uom=M26Constants.uom_miles()):
+        self.value = float(dist)
+        self.uom   = self.unit_of_measure(uom)
 
+    def unit_of_measure(self, s):
+        u = str(s).strip().lower()
+        if u == 'k':
+            return M26Constants.uom_kilometers()
+        elif u == 'y':
+            return M26Constants.uom_yards()
+        else:
+            return M26Constants.uom_miles()
 
-# class Distance
+    def is_miles(self):
+        return self.uom == M26Constants.uom_miles()
 
-#   constructor: (d=0, uom=Constants.UOM_MILES) ->
-#     @d = parseFloat(d)
-#     @d = 0 unless @d
-#     if uom
-#       @u = uom.toString().toLowerCase()
-#     else
-#       @u = Constants.UOM_MILES
+    def is_kilometers(self):
+        return self.uom == M26Constants.uom_kilometers()
 
-#     unless @u in Constants.UNITS_OF_MEASURE
-#       @u = Constants.UOM_MILES
+    def is_yards(self):
+        return self.uom == M26Constants.uom_yards()
 
-#   uom: ->
-#     @u
+    def as_miles(self):
+        if self.is_miles():
+            return self.value
+        elif self.is_kilometers():
+            return self.value / M26Constants.kilometers_per_mile()
+        else:
+            return self.value / M26Constants.yards_per_mile()
 
-#   dist: ->
-#     @d
+    def as_kilometers(self):
+        if self.is_miles():
+            return self.value * M26Constants.kilometers_per_mile()
+        elif self.is_kilometers():
+            return self.value
+        else:
+            return self.value / M26Constants.yards_per_kilometer()
 
-#   as_miles: ->
-#     switch @u
-#       when Constants.UOM_MILES then @d
-#       when Constants.UOM_KILOMETERS then @d / Constants.KILOMETERS_PER_MILE
-#       when Constants.UOM_YARDS then @d / Constants.YARDS_PER_MILE
-#       else 0
+    def as_yards(self):
+        if self.is_miles():
+            return self.value * M26Constants.yards_per_mile()
+        elif self.is_kilometers():
+            return self.value * M26Constants.yards_per_kilometer()
+        else:
+            return self.value
 
-#   as_kilometers: ->
-#     switch @u
-#       when Constants.UOM_MILES then @d * Constants.KILOMETERS_PER_MILE
-#       when Constants.UOM_KILOMETERS then @d
-#       when Constants.UOM_YARDS then (@d / Constants.YARDS_PER_MILE) / Constants.MILES_PER_KILOMETER
-#       else 0
+    def add(self, another_instance):
+        if self.is_miles():
+            self.value = self.value + another_instance.as_miles()
+        elif self.is_kilometers():
+            self.value = self.value + another_instance.as_kilometers()
+        else:
+            self.value = self.value + another_instance.as_yards()
 
-#   as_yards: ->
-#     switch @u
-#       when Constants.UOM_MILES then @d * Constants.YARDS_PER_MILE
-#       when Constants.UOM_KILOMETERS then (@d * Constants.MILES_PER_KILOMETER) * Constants.YARDS_PER_MILE
-#       when Constants.UOM_YARDS then @d
-#       else 0
-
-#   add: (another_instance) ->
-#     if another_instance
-#       d1 = @as_miles()
-#       d2 = another_instance.as_miles()
-#       new Distance(d1 + d2)
-
-#   subtract: (another_instance) ->
-#     if another_instance
-#       d1 = @as_miles()
-#       d2 = another_instance.as_miles()
-#       new Distance(d1 - d2)
+    def subtract(self, another_instance):
+        if self.is_miles():
+            self.value = self.value - another_instance.as_miles()
+        elif self.is_kilometers():
+            self.value = self.value - another_instance.as_kilometers()
+        else:
+            self.value = self.value - another_instance.as_yards()
+ 

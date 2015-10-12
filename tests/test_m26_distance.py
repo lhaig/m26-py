@@ -14,43 +14,87 @@ class M26DistanceTest(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_constructor(self):
-        self.assertTrue(0 == 0, "value should be 0")
+    def test_constructor_miles(self):
+        d = M26Distance()
+        self.assertTrue(d.value == 0,  "value should be 0")
+        self.assertTrue(d.uom  == 'm', "uom should be 'm'")
 
+        d = M26Distance(26.2)
+        self.assertTrue(d.value == 26.2, "value should be 26.2")
+        self.assertTrue(d.uom  == 'm', "uom should be 'm'")
 
-# describe 'Distance', ->
+        self.assertTrue(d.is_miles(),       "is_miles should be true")
+        self.assertFalse(d.is_kilometers(), "is_kilometers should be false")
+        self.assertFalse(d.is_yards(),      "is_yards should be false")
 
-#   it "should assume miles as UOM, and convert to other units", ->
-#     d = new Distance(26.2)
-#     expect(d.uom()).toBe(Constants.UOM_MILES)
-#     expect(d.as_miles()).isWithin(0.0000000001, 26.2)
-#     expect(d.as_kilometers()).isWithin(0.0000000001, 42.1648128)
-#     expect(d.as_yards()).isWithin(0.000001, 46112.0)
+        self.assertAlmostEqual(d.as_miles(),      26.2)
+        self.assertAlmostEqual(d.as_kilometers(), 42.1648128)
+        self.assertAlmostEqual(d.as_yards(),      46112.0)
 
-#   it "should calculate a 10K, and convert to other units", ->
-#     d = new Distance(10.0, 'k')
-#     expect(d.uom()).toBe(Constants.UOM_KILOMETERS)
-#     expect(d.as_miles()).isWithin(0.0000000001, 6.2137119223733395)
-#     expect(d.as_kilometers()).isWithin(0.0000000001, 10.0)
-#     expect(d.as_yards()).isWithin(0.000001, 10936.132983377078)
+    def test_constructor_kilometers(self):
+        d = M26Distance(50.0, 'k')
+        self.assertTrue(d.value == 50.0, "value should be 50.0")
+        self.assertTrue(d.uom  == 'k', "uom should be 'k'")
 
-#   it "should calculate an 1800y, and convert to other units", ->
-#     d = new Distance(1800.0, 'y')
-#     expect(d.uom()).toBe(Constants.UOM_YARDS)
-#     expect(d.as_miles()).isWithin(0.0000000001, 1.0227272727272727)
-#     expect(d.as_kilometers()).isWithin(0.0000000001, 1.64592)
-#     expect(d.as_yards()).isWithin(0.000001, 1800)
+        d = M26Distance(10, ' K ')
+        self.assertTrue(d.value == 10.0, "value should be 10.0")
+        self.assertTrue(d.uom  == 'k', "uom should be 'k'")
 
-#   it "should add", ->
-#     d1 = new Distance(26.2)
-#     d2 = new Distance(4.8)
-#     d3 = d1.add(d2)
-#     expect(d3.uom()).toBe(Constants.UOM_MILES)
-#     expect(d3.as_miles()).isWithin(0.0000000001, 31.0)
+        self.assertFalse(d.is_miles(),     "is_miles should be false")
+        self.assertTrue(d.is_kilometers(), "is_kilometers should be true")
+        self.assertFalse(d.is_yards(),     "is_yards should be false")
 
-#   it "should subtract", ->
-#     d1 = new Distance(26.2)
-#     d2 = new Distance(10.0, 'k')
-#     d3 = d1.subtract(d2)
-#     expect(d3.uom()).toBe(Constants.UOM_MILES)
-#     expect(d3.as_miles()).isWithin(0.0000000001, 19.98628807762666)
+        self.assertAlmostEqual(d.as_miles(),      6.2137119223733395)
+        self.assertAlmostEqual(d.as_kilometers(), 10.000000)
+        self.assertAlmostEqual(d.as_yards(),      10936.132983377078)
+
+    def test_constructor_yards(self):
+        d = M26Distance(3600.0, 'y')
+        self.assertTrue(d.value == 3600.0, "value should be 3600.0")
+        self.assertTrue(d.uom == 'y', "uom should be 'y'")
+
+        d = M26Distance(1800.0, ' Y ')
+        self.assertTrue(d.value == 1800.0, "value should be 1800.0")
+        self.assertTrue(d.uom == 'y', "uom should be 'y'")
+
+        self.assertFalse(d.is_miles(),      "is_miles should be false")
+        self.assertFalse(d.is_kilometers(), "is_kilometers should be false")
+        self.assertTrue(d.is_yards(),       "is_yards should be true")
+
+        self.assertAlmostEqual(d.as_miles(),      1.0227272727272727)
+        self.assertAlmostEqual(d.as_kilometers(), 1.64592)
+        self.assertAlmostEqual(d.as_yards(),      1800.000000)
+
+    def test_add(self):
+        d1 = M26Distance(26.2, 'm')
+        d2 = M26Distance(4.8, 'm')
+        d3 = M26Distance(5.0, 'k')
+        d4 = M26Distance(1800, 'y')
+
+        d1.add(d2)
+        self.assertAlmostEqual(d1.value, 31.0)
+        self.assertTrue(d1.uom == 'm', "uom should be 'm'")
+
+        d1.add(d3)
+        self.assertAlmostEqual(d1.value, 34.10685596118667)
+
+        d1.add(d4)
+        self.assertAlmostEqual(d1.value, 35.12958323391394)
+        self.assertTrue(d1.uom == 'm', "uom should be 'm'")
+
+    def test_subtract(self):
+        d1 = M26Distance(26.2, 'm')
+        d2 = M26Distance(4.8, 'm')
+        d3 = M26Distance(5.0, 'k')
+        d4 = M26Distance(1800, 'y')
+
+        d1.subtract(d2)
+        self.assertAlmostEqual(d1.value, 21.4)
+        self.assertTrue(d1.uom == 'm', "uom should be 'm'")
+
+        d1.subtract(d3)
+        self.assertAlmostEqual(d1.value, 18.293144038813328)
+
+        d1.subtract(d4)
+        self.assertAlmostEqual(d1.value, 17.270416766086054)
+        self.assertTrue(d1.uom == 'm', "uom should be 'm'")

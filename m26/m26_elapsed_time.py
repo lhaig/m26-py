@@ -1,63 +1,71 @@
 __author__ = 'cjoakim'
 
-import os
+import math
+import numbers
+
+from numbers import Number
+
+from .m26_constants import M26Constants
 
 
 class M26ElapsedTime(object):
 
-  def __init__(self):
-    self.value = 0
+    def __init__(self, val='00:00:00'):
+        self.secs = 0
+        self.hh   = 0
+        self.mm   = 0
+        self.ss   = 0
 
+        if isinstance(val, Number):
+            self.initialize_from_number(val)
+        elif isinstance(val, str):
+            self.initialize_from_string(val)
 
-# class ElapsedTime
+    def initialize_from_number(self, val):
+        sph = M26Constants.seconds_per_hour()
+        self.secs = float(val)
+        self.hh   = math.floor(self.secs / sph)
+        rem       = self.secs - (self.hh * sph)
+        self.mm   = math.floor(rem / 60.0)
+        self.ss   = rem - (self.mm * 60.0)
 
-#   constructor: (val='00:00:00') ->
-#     [@hh, @mm, @ss, @secs] = [0, 0, 0, 0]
-#     if typeof val is 'number'
-#       @initialize_from_number(val)
-#     else
-#       @initialize_from_string(val)
+    def initialize_from_string(self, val):
+        stripped = str(val).strip()
+        if len(stripped) > 0:
+            tokens = stripped.split(':')
+            if len(tokens) == 0:
+                pass
+            elif len(tokens) == 1:
+                self.ss = self.to_float(tokens[0])
+            elif len(tokens) == 2:
+                self.mm = self.to_float(tokens[0])
+                self.ss = self.to_float(tokens[1])
+            elif len(tokens) == 3:
+                self.hh = self.to_float(tokens[0])
+                self.mm = self.to_float(tokens[1])
+                self.ss = self.to_float(tokens[2])
+            else:
+                pass
 
-#   initialize_from_number: (n) ->
-#     try
-#       @secs = new Number(n)
-#       @hh = Math.floor(@secs / Constants.SECONDS_PER_HOUR)
-#       rem = @secs - (@hh * Constants.SECONDS_PER_HOUR)
-#       @mm = Math.floor(rem / 60.0)
-#       @ss = rem - (@mm * 60.0)
-#     catch error
-#       console.log 'Error in ElpasedTime constructor (nbr) for ' + n + ', error: ' + error
+        self.secs = (self.hh * 3600.0) + (self.mm * 60.0) + self.ss
 
-#   initialize_from_string: (s) ->
-#     try
-#       tokens = s.split(':')
-#       if tokens.length is 3
-#         @hh = parseInt(tokens[0], 10)
-#         @mm = parseInt(tokens[1], 10)
-#         @ss = parseInt(tokens[2], 10)
-#       else if tokens.length is 2
-#         @mm = parseInt(tokens[0], 10)
-#         @ss = parseInt(tokens[1], 10)
-#       else if tokens.length is 1
-#         @ss = parseInt(tokens[0], 10)
-#       else
-#         @ss = parseInt(s)
-#       @secs = (@hh * 3600) + (@mm * 60) + @ss
-#     catch error
-#       console.log 'Error in ElpasedTime constructor (str) for ' + s + ', error: ' + error
+    def to_float(self, s):
+        try:
+            return float(s)
+        except ValueError:
+            return float(0.0)
 
-#   seconds: ->
-#     @secs
+    def hours(self):
+        return float(self.secs / M26Constants.seconds_per_hour())
 
-#   hours: ->
-#     @secs / Constants.SECONDS_PER_HOUR
+    def as_hhmmss(self):
+        hhs = self.zero_fill(self.hh)
+        mms = self.zero_fill(self.mm)
+        sss = self.zero_fill(self.ss)
+        return "{0}:{1}:{2}".format(hhs, mms, sss)
 
-#   as_hhmmss: ->
-#     @ss = parseInt(@ss)
-#     '' + @zero_pad(@hh) + ':'  + @zero_pad(@mm) + ':' + @zero_pad(@ss)
-
-#   zero_pad: (n=0) ->
-#     if n < 10
-#       '0' + n
-#     else
-#       '' + n
+    def zero_fill(self, n):
+        if n < 10:
+            return "0{0}".format(int(n))
+        else:
+            return "{0}".format(int(n))

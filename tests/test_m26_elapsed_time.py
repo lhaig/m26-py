@@ -6,7 +6,7 @@ import unittest
 from m26.m26_elapsed_time import M26ElapsedTime
 
 
-class M26ElapsedTime(unittest.TestCase):
+class M26ElapsedTimeTest(unittest.TestCase):
 
     def setUp(self):
         self.epoch = str(int(time.time()))
@@ -14,42 +14,38 @@ class M26ElapsedTime(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_constructor(self):
-        self.assertTrue(0 == 0, "value should be 0")
+    def test_constructor_with_number(self):
+        t = M26ElapsedTime(3665)
+        self.assertAlmostEqual(t.hh,      1.0000)
+        self.assertAlmostEqual(t.mm,      1.0000)
+        self.assertAlmostEqual(t.ss,      5.0000)
+        self.assertAlmostEqual(t.secs,    3665.0000)
+        self.assertAlmostEqual(t.hours(), 1.0180555555555555)
+        self.assertTrue(t.as_hhmmss() == '01:01:05', "as_hhmmss is incorrect")
 
+    def test_constructor_with_string(self):
+        t = M26ElapsedTime('3:47:30')
+        self.assertAlmostEqual(t.hh,      3.0000)
+        self.assertAlmostEqual(t.mm,      47.0000)
+        self.assertAlmostEqual(t.ss,      30.0000)
+        self.assertAlmostEqual(t.secs,    13650.0000)
+        self.assertAlmostEqual(t.hours(), 3.7916666666666665)
+        self.assertTrue(t.as_hhmmss() == '03:47:30', "as_hhmmss is incorrect")
 
-# describe 'ElapsedTime', ->
+    def test_constructor_with_empty_string(self):
+        t = M26ElapsedTime('')
+        self.assertAlmostEqual(t.hh,      0.0000)
+        self.assertAlmostEqual(t.mm,      0.0000)
+        self.assertAlmostEqual(t.ss,      00.0000)
+        self.assertAlmostEqual(t.secs,    00.0000)
+        self.assertAlmostEqual(t.hours(), 0.0)
+        self.assertTrue(t.as_hhmmss() == '00:00:00', "as_hhmmss is incorrect")
 
-#   it 'constructs with a number of seconds', ->
-#     t = new ElapsedTime(3665)
-#     expect(t.as_hhmmss()).toBe('01:01:05')
-#     expect(t.seconds()).isWithin(0.000001, 3665.0)
-#     expect(t.hours()).isWithin(0.000001, 1.0180555555555555)
-
-#   it 'constructs with a hh:mm:ss string', ->
-#     t = new ElapsedTime('1:1:5')
-#     expect(t.as_hhmmss()).toBe('01:01:05')
-
-#     t = new ElapsedTime('01:01:05')
-#     expect(t.as_hhmmss()).toBe('01:01:05')
-
-#     t = new ElapsedTime(' 01 : 01 : 05 ')
-#     expect(t.as_hhmmss()).toBe('01:01:05')
-
-#   it 'constructs with a mm:ss string', ->
-#     t = new ElapsedTime('1:5')
-#     expect(t.as_hhmmss()).toBe('00:01:05')
-
-#     t = new ElapsedTime('01:57')
-#     expect(t.as_hhmmss()).toBe('00:01:57')
-#     expect(t.seconds()).isWithin(0.000001, 117.0)
-#     expect(t.hours()).isWithin(0.000001, 0.0325)
-
-#   it 'constructs with a ss string', ->
-#     t = new ElapsedTime('5')
-#     expect(t.as_hhmmss()).toBe('00:00:05')
-
-#     t = new ElapsedTime(' 5 ')
-#     expect(t.as_hhmmss()).toBe('00:00:05')
-#     expect(t.seconds()).isWithin(0.000001, 5.0)
-#     expect(t.hours()).isWithin(0.000001, 0.001388888888888889)
+    def test_constructor_with_malformed_string(self):
+        t = M26ElapsedTime('3:xx:q')
+        self.assertAlmostEqual(t.hh,      3.0000)
+        self.assertAlmostEqual(t.mm,      0.0000)
+        self.assertAlmostEqual(t.ss,      0.0000)
+        self.assertAlmostEqual(t.secs,    10800.0000)
+        self.assertAlmostEqual(t.hours(), 3.000)
+        self.assertTrue(t.as_hhmmss() == '03:00:00', "as_hhmmss is incorrect")

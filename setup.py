@@ -15,7 +15,7 @@ setup(
     name='m26',
 
     # Versions should comply with PEP440.
-    version='0.0.4',
+    version='0.0.5',
 
     description='m26 is a python library for speed and pace calculations for sports like running and cycling',
     long_description=long_description,
@@ -58,7 +58,7 @@ setup(
 
     # Dev and Test dependencies, install like this: $ pip install -e .[dev,test]
     extras_require={
-        'dev':  ['check-manifest'],
+        'dev':  ['check-manifest', 'flake8'],
         'test': ['coverage'],
     },
 )

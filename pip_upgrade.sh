@@ -13,9 +13,10 @@ pip3 --version
 python3 --version
 
 pip install --upgrade arrow
-pip install --upgrade nose
-pip install --upgrade coverage
 pip install --upgrade check-manifest
+pip install --upgrade coverage
+pip install --upgrade flake8
+pip install --upgrade nose
 
 pip list   > pip_list.txt
 pip freeze > requirements.txt

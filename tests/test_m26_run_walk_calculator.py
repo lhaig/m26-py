@@ -1,6 +1,4 @@
-
-import os
-import time
+import json
 import unittest
 
 from m26.m26_run_walk_calculator import M26RunWalkCalculator
@@ -14,67 +12,89 @@ class M26RunWalkCalculatorTest(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_constructor(self):
-        self.assertTrue(0 == 0, "value should be 0")
+    def log_result(self, result_dict):
+        print(json.dumps(result_dict, sort_keys=True, indent=2))
 
+    def test_calculate_all_walking(self):
+        run_hhmmss = '00:00'
+        run_ppm = '9:00'
+        walk_hhmmss = '10:00'
+        walk_ppm = '18:00'
+        miles = '3.333'
 
-# describe 'RunWalkCalculator', ->
+        result = M26RunWalkCalculator.calculate(run_hhmmss, run_ppm, walk_hhmmss, walk_ppm, miles)
+        self.log_result(result)
 
-#   it "should calculate with all walking", ->
-#     run_hhmmss  = '00:00'
-#     run_ppm     = '9:00'
-#     walk_hhmmss = '10:00'
-#     walk_ppm    = '18:00'
-#     miles       = '3.333'
+        self.assertAlmostEqual(result['avg_mph'], 3.33333333)
+        self.assertAlmostEqual(result['miles'], 3.333)
+        self.assertAlmostEqual(result['proj_miles'], 3.333)
 
-#     result = RunWalkCalculator.calculate(run_hhmmss, run_ppm, walk_hhmmss, walk_ppm, miles)
-#     # console.log(JSON.stringify(result, null, 2))
-    
-#     expect(result.avg_mph).isWithin(0.000001, 3.333333)
-#     expect(result.proj_miles).isWithin(0.001, 3.333)
-#     expect(result.avg_ppm).toBe('18:00')
-#     expect(result.proj_time).toBe('00:59:59')
+        self.assertTrue(result['avg_ppm'] == '18:00.0', "avg_ppm is incorrect")
+        self.assertTrue(result['proj_time'] == '00:59:59', "proj_time is incorrect")
+        self.assertTrue(result['run_hhmmss'] == '00:00', "run_hhmmss is incorrect")
+        self.assertTrue(result['run_ppm'] == '9:00', "run_ppm is incorrect")
+        self.assertTrue(result['walk_hhmmss'] == '10:00', "walk_hhmmss is incorrect")
+        self.assertTrue(result['walk_ppm'] == '18:00', "walk_ppm is incorrect")
 
-#   it "should calculate with all running", ->
-#     run_hhmmss  = '10:00'
-#     run_ppm     = '9:00'
-#     walk_hhmmss = '00:00'
-#     walk_ppm    = '18:00'
-#     miles       = '3.333'
+    def test_calculate_all_running(self):
+        run_hhmmss = '10:00'
+        run_ppm = '9:00'
+        walk_hhmmss = '00:00'
+        walk_ppm = '18:00'
+        miles = '3.333'
 
-#     result = RunWalkCalculator.calculate(run_hhmmss, run_ppm, walk_hhmmss, walk_ppm, miles)
-    
-#     expect(result.avg_mph).isWithin(0.000001, 6.666666)
-#     expect(result.proj_miles).isWithin(0.001, 3.333)
-#     expect(result.avg_ppm).toBe('9:00')
-#     expect(result.proj_time).toBe('00:29:59')
+        result = M26RunWalkCalculator.calculate(run_hhmmss, run_ppm, walk_hhmmss, walk_ppm, miles)
+        self.log_result(result)
 
-#   it "should calculate with a 1:1 ratio of running to walking", ->
-#     run_hhmmss  = '10:00'
-#     run_ppm     = '8:00'
-#     walk_hhmmss = '10:00'
-#     walk_ppm    = '16:00'
-#     miles       = '4.0'
+        self.assertAlmostEqual(result['avg_mph'], 6.66666666)
+        self.assertAlmostEqual(result['miles'], 3.333)
+        self.assertAlmostEqual(result['proj_miles'], 3.333)
 
-#     result = RunWalkCalculator.calculate(run_hhmmss, run_ppm, walk_hhmmss, walk_ppm, miles)
-#     # console.log(JSON.stringify(result, null, 2))
-    
-#     expect(result.avg_mph).isWithin(0.000001, 5.0)
-#     expect(result.proj_miles).isWithin(0.001, 4.0)
-#     expect(result.avg_ppm).toBe('12:00')
-#     expect(result.proj_time).toBe('00:48:00')
+        self.assertTrue(result['avg_ppm'] == '9:00.0', "avg_ppm is incorrect")
+        self.assertTrue(result['proj_time'] == '00:29:59', "proj_time is incorrect")
+        self.assertTrue(result['run_hhmmss'] == '10:00', "run_hhmmss is incorrect")
+        self.assertTrue(result['run_ppm'] == '9:00', "run_ppm is incorrect")
+        self.assertTrue(result['walk_hhmmss'] == '00:00', "walk_hhmmss is incorrect")
+        self.assertTrue(result['walk_ppm'] == '18:00', "walk_ppm is incorrect")
 
-#   it "should calculate a marathon with a 9:1 ratio of running to walking", ->
-#     run_hhmmss  = '9:00'
-#     run_ppm     = '9:00'
-#     walk_hhmmss = '1:00'
-#     walk_ppm    = '18:00'
-#     miles       = '26.2'
+    def test_calculate_1_to_1_run_walk(self):
+        run_hhmmss = '10:00'
+        run_ppm = '8:00'
+        walk_hhmmss = '10:00'
+        walk_ppm = '16:00'
+        miles = '4.0'
 
-#     result = RunWalkCalculator.calculate(run_hhmmss, run_ppm, walk_hhmmss, walk_ppm, miles)
-#     # console.log(JSON.stringify(result, null, 2))
-    
-#     expect(result.avg_mph).isWithin(0.000001, 6.060606)
-#     expect(result.proj_miles).isWithin(0.001, 26.2)
-#     expect(result.avg_ppm).toBe('9:54')
-#     expect(result.proj_time).toBe('04:19:22')
+        result = M26RunWalkCalculator.calculate(run_hhmmss, run_ppm, walk_hhmmss, walk_ppm, miles)
+        self.log_result(result)
+
+        self.assertAlmostEqual(result['avg_mph'], 5.0000000)
+        self.assertAlmostEqual(result['miles'], 4.000)
+        self.assertAlmostEqual(result['proj_miles'], 4.000)
+
+        self.assertTrue(result['avg_ppm'] == '12:00.0', "avg_ppm is incorrect")
+        self.assertTrue(result['proj_time'] == '00:48:00', "proj_time is incorrect")
+        self.assertTrue(result['run_hhmmss'] == '10:00', "run_hhmmss is incorrect")
+        self.assertTrue(result['run_ppm'] == '8:00', "run_ppm is incorrect")
+        self.assertTrue(result['walk_hhmmss'] == '10:00', "walk_hhmmss is incorrect")
+        self.assertTrue(result['walk_ppm'] == '16:00', "walk_ppm is incorrect")
+
+    def test_calculate_9_to_1_marathon(self):
+        run_hhmmss = '9:00'
+        run_ppm = '9:00'
+        walk_hhmmss = '1:00'
+        walk_ppm = '18:00'
+        miles = '26.2'
+
+        result = M26RunWalkCalculator.calculate(run_hhmmss, run_ppm, walk_hhmmss, walk_ppm, miles)
+        self.log_result(result)
+
+        self.assertAlmostEqual(result['avg_mph'], 6.0606060606060606)
+        self.assertAlmostEqual(result['miles'], 26.200)
+        self.assertAlmostEqual(result['proj_miles'], 26.200)
+
+        self.assertTrue(result['avg_ppm'] == '9:54.0', "avg_ppm is incorrect")
+        self.assertTrue(result['proj_time'] == '04:19:22', "proj_time is incorrect")
+        self.assertTrue(result['run_hhmmss'] == '9:00', "run_hhmmss is incorrect")
+        self.assertTrue(result['run_ppm'] == '9:00', "run_ppm is incorrect")
+        self.assertTrue(result['walk_hhmmss'] == '1:00', "walk_hhmmss is incorrect")
+        self.assertTrue(result['walk_ppm'] == '18:00', "walk_ppm is incorrect")

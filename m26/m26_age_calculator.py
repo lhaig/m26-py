@@ -9,7 +9,8 @@ class M26AgeCalculator(object):
 
     @classmethod
     def seconds_per_year(cls):
-        return float(31557600.0)  # 60 * 60 * 24 * 365.25
+        # seconds * minutes * hours * days
+        return float(60 * 60 * 24 * 365.25)
 
     @classmethod
     def milliseconds_per_year(cls):

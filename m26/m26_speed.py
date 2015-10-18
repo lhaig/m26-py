@@ -3,7 +3,7 @@ __author__ = 'cjoakim'
 import math
 
 # from .m26_distance import M26Distance
-# from .m26_elapsed_time import M26ElapsedTime
+from .m26_elapsed_time import M26ElapsedTime
 
 
 class M26Speed(object):
@@ -40,7 +40,17 @@ class M26Speed(object):
         return float(self.etime.secs / self.dist.as_miles())
 
     def projected_time(self, another_distance, algorithm='simple'):
-        pass
+        if algorithm is 'riegel':
+            t1 = float(self.etime.secs)
+            d1 = self.dist.as_miles()
+            d2 = another_distance.as_miles()
+            t2 = t1 * math.pow(float(d2 / d1), float(1.06))
+            et = M26ElapsedTime(t2)
+            return et.as_hhmmss()
+        else:
+            secs = float(self.seconds_per_mile() * another_distance.as_miles())
+            et = M26ElapsedTime(secs)
+            return et.as_hhmmss()
 
     def age_graded(self, event_age, graded_age):
         pass

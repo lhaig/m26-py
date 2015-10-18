@@ -1,7 +1,6 @@
 __author__ = 'cjoakim'
 
 import math
-import numbers
 
 from numbers import Number
 
@@ -12,9 +11,9 @@ class M26ElapsedTime(object):
 
     def __init__(self, val='00:00:00'):
         self.secs = 0
-        self.hh   = 0
-        self.mm   = 0
-        self.ss   = 0
+        self.hh = 0
+        self.mm = 0
+        self.ss = 0
 
         if isinstance(val, Number):
             self.initialize_from_number(val)
@@ -24,10 +23,10 @@ class M26ElapsedTime(object):
     def initialize_from_number(self, val):
         sph = M26Constants.seconds_per_hour()
         self.secs = float(val)
-        self.hh   = math.floor(self.secs / sph)
-        rem       = self.secs - (self.hh * sph)
-        self.mm   = math.floor(rem / 60.0)
-        self.ss   = rem - (self.mm * 60.0)
+        self.hh = math.floor(self.secs / sph)
+        rem = self.secs - (self.hh * sph)
+        self.mm = math.floor(rem / 60.0)
+        self.ss = rem - (self.mm * 60.0)
 
     def initialize_from_string(self, val):
         stripped = str(val).strip()

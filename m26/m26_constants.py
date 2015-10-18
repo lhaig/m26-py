@@ -45,7 +45,7 @@ class M26Constants(object):
 
     @classmethod
     def seconds_per_hour(cls):
-        return float(3600.0)  
+        return float(3600.0)
 
     @classmethod
     def miles_per_marathon(cls):

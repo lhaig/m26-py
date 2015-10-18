@@ -1,12 +1,10 @@
 __author__ = 'cjoakim'
 
-import os
-
 
 class M26RunWalkCalculator(object):
 
-  def __init__(self):
-    self.value = 0
+    def __init__(self):
+        self.value = 0
 
 
 # class RunWalkCalculator
@@ -24,7 +22,8 @@ class M26RunWalkCalculator(object):
 #       distance    = new Distance(miles)
 #       mile        = new Distance(1.0)
 
-#       total_secs  = run_duration_elapsed_time.seconds() + walk_duration_elapsed_time.seconds()
+#       total_secs  = run_duration_elapsed_time.seconds() +
+#                     walk_duration_elapsed_time.seconds()
 #       run_pct     = run_duration_elapsed_time.seconds() / total_secs
 #       walk_pct    = 1.0 - run_pct
 
@@ -43,4 +42,3 @@ class M26RunWalkCalculator(object):
 #       result.proj_miles = distance.as_miles()
 
 #     result
-

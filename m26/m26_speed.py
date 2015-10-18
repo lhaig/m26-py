@@ -2,15 +2,15 @@ __author__ = 'cjoakim'
 
 import math
 
-from .m26_distance     import M26Distance
-from .m26_elapsed_time import M26ElapsedTime
+# from .m26_distance import M26Distance
+# from .m26_elapsed_time import M26ElapsedTime
 
 
 class M26Speed(object):
 
     def __init__(self, d, et):
-        self.dist  = d    # an instance of M26Distance
-        self.etime = et   # an instance of M26ElapsedTime
+        self.dist = d    # an instance of M26Distance
+        self.etime = et  # an instance of M26ElapsedTime
 
     def mph(self):
         return self.dist.as_miles() / self.etime.hours()
@@ -23,8 +23,8 @@ class M26Speed(object):
 
     def pace_per_mile(self):
         spm = self.seconds_per_mile()
-        mm  = math.floor(spm / 60.0)
-        ss  = spm - (mm * 60.0)
+        mm = math.floor(spm / 60.0)
+        ss = spm - (mm * 60.0)
 
         if ss < 10:
             ss = "0{0}".format(ss)

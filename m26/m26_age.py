@@ -1,10 +1,5 @@
 __author__ = 'cjoakim'
 
-import hashlib
-import json
-import os
-import os.path
-
 
 class M26Age(object):
 
@@ -29,14 +24,13 @@ class M26Age(object):
 
     def training_zones(self):
         results = list()
-        zones   = [ 0.95, 0.90, 0.85, 0.80, 0.75 ]
-        max     = self.max_pulse()
+        zones = [0.95, 0.90, 0.85, 0.80, 0.75]
         for idx, pct in enumerate(zones):
             data = dict()
-            data['zone']    = idx + 1
-            data['age']     = self.value
-            data['max']     = self.max_pulse()
+            data['zone'] = idx + 1
+            data['age'] = self.value
+            data['max'] = self.max_pulse()
             data['pct_max'] = pct
-            data['pulse']   = self.max_pulse() * pct
+            data['pulse'] = self.max_pulse() * pct
             results.append(data)
         return results

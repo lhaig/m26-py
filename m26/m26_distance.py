@@ -7,7 +7,7 @@ class M26Distance(object):
 
     def __init__(self, dist=0.0, uom=M26Constants.uom_miles()):
         self.value = float(dist)
-        self.uom   = self.unit_of_measure(uom)
+        self.uom = self.unit_of_measure(uom)
 
     def unit_of_measure(self, s):
         u = str(s).strip().lower()
@@ -66,4 +66,3 @@ class M26Distance(object):
             self.value = self.value - another_instance.as_kilometers()
         else:
             self.value = self.value - another_instance.as_yards()
- 

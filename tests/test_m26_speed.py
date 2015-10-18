@@ -3,6 +3,7 @@ import os
 import time
 import unittest
 
+from m26.m26_age          import M26Age
 from m26.m26_distance     import M26Distance
 from m26.m26_elapsed_time import M26ElapsedTime
 from m26.m26_speed        import M26Speed
@@ -30,31 +31,53 @@ class M26SpeedTest(unittest.TestCase):
         d = M26Distance(26.2)
         t = M26ElapsedTime('3:47:30')
         s = M26Speed(d, t)
+        ppm = s.pace_per_mile()
+
         self.assertAlmostEqual(s.mph(), 6.90989010989011)
         self.assertAlmostEqual(s.kph(), 11.120390189010989)
         self.assertAlmostEqual(s.yph(), 12161.4065934066)
         self.assertAlmostEqual(s.seconds_per_mile(), 520.992366412214)
-        self.assertTrue(s.pace_per_mile() == '8:40.99', "pace_per_mile is incorrect")
+        self.assertTrue(ppm == '8:40.99', "pace_per_mile is incorrect; {0}".format(ppm))
 
-#   it 'projected_time using a simple linear formula', ->
-#     d1 = new Distance(10.0)
-#     t  = new ElapsedTime('1:30:00')
-#     s  = new Speed(d1, t)
-#     expect(s.seconds_per_mile()).isWithin(0.000001, 540)
-#     expect(s.pace_per_mile()).toBe('9:00')
-#     d2 = new Distance(20.0)
-#     hhmmss = s.projected_time(d2, 'simple')
-#     expect(hhmmss).toBe('03:00:00')
+    def test_project_time_with_linear_formula(self):
+        d = M26Distance(10.0)
+        t = M26ElapsedTime('1:30:0')
+        s = M26Speed(d, t)
+        spm = s.seconds_per_mile()
+        ppm = s.pace_per_mile()
+        self.assertAlmostEqual(spm, 540.0)
+        self.assertTrue(ppm == '9:00.0', "pace_per_mile is incorrect; {0}".format(ppm))
 
-#   it 'projected_time using the exponential riegel formula', ->
-#     d1 = new Distance(10.0)
-#     t  = new ElapsedTime('1:30:00')
-#     s  = new Speed(d1, t)
-#     expect(s.seconds_per_mile()).isWithin(0.000001, 540)
-#     expect(s.pace_per_mile()).toBe('9:00')
-#     d2 = new Distance(20.0)
-#     hhmmss = s.projected_time(d2, 'riegel')
-#     expect(hhmmss).toBe('03:07:38')
+        d2 = M26Distance(20.0)
+        hhmmss = s.projected_time(d2)
+        self.assertTrue(hhmmss == '03:00:00', "projected_time is incorrect; {0}".format(hhmmss))
+
+    def test_project_time_with_exponential_formula(self):
+        d = M26Distance(10.0)
+        t = M26ElapsedTime('1:30:0')
+        s = M26Speed(d, t)
+        spm = s.seconds_per_mile()
+        ppm = s.pace_per_mile()
+        self.assertAlmostEqual(spm, 540.0)
+        self.assertTrue(ppm == '9:00.0', "pace_per_mile is incorrect; {0}".format(ppm))
+
+        d2 = M26Distance(20.0)
+        hhmmss = s.projected_time(d2, 'riegel')
+        self.assertTrue(hhmmss == '03:07:38', "projected_time is incorrect; {0}".format(hhmmss))
+
+    def test_age_graded_time(self):
+        d = M26Distance(26.2)
+        t = M26ElapsedTime('3:47:30')
+        s1 = M26Speed(d, t)
+        a1 = M26Age(42.5)
+        a2 = M26Age(43.5)
+        a3 = M26Age(57.1)
+        s2 = s1.age_graded(a1, a2)
+        s3 = s1.age_graded(a1, a3)
+
+        self.assertAlmostEqual(s1.mph(), 6.90989010989011)
+        self.assertAlmostEqual(s2.mph(), 6.870961151524531)
+        self.assertAlmostEqual(s3.mph(), 6.341527317752669)
 
 #   it 'should calculate an age_graded Speed', ->
 #     d  = new Distance(26.2)

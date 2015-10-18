@@ -2,7 +2,7 @@
 
     <description>
         Ant script to create a zip file backup of this project.
-        Chris Joakim, 2015/10/11
+        Chris Joakim, 2015/10/18
     </description>
 
     <!-- These are the only properties you should have to change.  -->
@@ -37,7 +37,7 @@
         </description>
 
         <tstamp>
-            <format property="_backupTstamp" pattern="yyyyMMdd_HHmm" />
+            <format property="_backupTstamp" pattern="yyyyMMdd-HHmm" />
         </tstamp>
 
         <property name="_zipFilename" value="${_backupDir}/${_projectName}-${_backupTstamp}.zip" />

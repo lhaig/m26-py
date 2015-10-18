@@ -2,7 +2,6 @@ __author__ = 'cjoakim'
 
 import math
 
-# from .m26_distance import M26Distance
 from .m26_elapsed_time import M26ElapsedTime
 
 
@@ -53,25 +52,7 @@ class M26Speed(object):
             return et.as_hhmmss()
 
     def age_graded(self, event_age, graded_age):
-        pass
-
-#   projected_time: (another_distance, algorithm='simple') ->
-#     if algorithm is 'riegel'
-#       t1 = @et.secs
-#       d1 = @d.as_miles()
-#       d2 = another_distance.as_miles()
-#       # t2 = t1.to_f * ((d2.to_f / d1.to_f) ** pow)   Math.pow(3,3)
-#       t2 = t1 * Math.pow((d2 / d1), 1.06)
-#       et = new ElapsedTime(t2);
-#       return et.as_hhmmss()
-#     else
-#       secs = @seconds_per_mile() * another_distance.as_miles()
-#       et = new ElapsedTime(secs);
-#       return et.as_hhmmss()
-
-#   age_graded: (event_age, graded_age) ->
-#     ag_factor = event_age.max_pulse() / graded_age.max_pulse()
-#     event_secs = this.et.seconds()
-#     graded_secs = event_secs * ag_factor
-#     graded_et   = new ElapsedTime(graded_secs)
-#     new Speed(this.d, graded_et)
+        ag_factor = event_age.max_pulse() / graded_age.max_pulse()
+        graded_secs = float((self.etime.secs)) * float(ag_factor)
+        graded_et = M26ElapsedTime(graded_secs)
+        return M26Speed(self.dist, graded_et)

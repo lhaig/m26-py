@@ -4,10 +4,10 @@ import math
 
 from numbers import Number
 
-from .m26_constants import M26Constants
+from .constants import Constants
 
 
-class M26ElapsedTime(object):
+class ElapsedTime(object):
 
     def __init__(self, val='00:00:00'):
         self.secs = 0
@@ -21,7 +21,7 @@ class M26ElapsedTime(object):
             self.initialize_from_string(val)
 
     def initialize_from_number(self, val):
-        sph = M26Constants.seconds_per_hour()
+        sph = Constants.seconds_per_hour()
         self.secs = float(val)
         self.hh = math.floor(self.secs / sph)
         rem = self.secs - (self.hh * sph)
@@ -55,7 +55,7 @@ class M26ElapsedTime(object):
             return float(0.0)
 
     def hours(self):
-        return float(self.secs / M26Constants.seconds_per_hour())
+        return float(self.secs / Constants.seconds_per_hour())
 
     def as_hhmmss(self):
         hhs = self.zero_fill(self.hh)

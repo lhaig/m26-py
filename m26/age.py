@@ -1,8 +1,11 @@
 __author__ = 'cjoakim'
 
 
-class M26Age(object):
-
+class Age(object):
+    """
+    Instances of this class represent the age of a person, as a float value
+    of their age in years.
+    """
     def __init__(self, n=0.0):
         self.value = float(n)
 

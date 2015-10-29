@@ -2,10 +2,10 @@ __author__ = 'cjoakim'
 
 import arrow
 
-from .m26_age import M26Age
+from .age import Age
 
 
-class M26AgeCalculator(object):
+class AgeCalculator(object):
 
     @classmethod
     def seconds_per_year(cls):
@@ -26,6 +26,6 @@ class M26AgeCalculator(object):
                 asof_ts = asof_date.timestamp
                 diff = float(asof_ts - birth_ts)
                 years = diff / self.seconds_per_year()
-                return M26Age(years)
+                return Age(years)
         else:
             return None

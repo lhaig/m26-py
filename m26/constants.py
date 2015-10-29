@@ -1,7 +1,7 @@
 __author__ = 'cjoakim'
 
 
-class M26Constants(object):
+class Constants(object):
 
     @classmethod
     def uom_miles(cls):

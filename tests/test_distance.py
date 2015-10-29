@@ -3,10 +3,10 @@ import os
 import time
 import unittest
 
-from m26.m26_distance import M26Distance
+from m26.distance import Distance
 
 
-class M26DistanceTest(unittest.TestCase):
+class DistanceTest(unittest.TestCase):
 
     def setUp(self):
         pass
@@ -15,11 +15,11 @@ class M26DistanceTest(unittest.TestCase):
         pass
 
     def test_constructor_miles(self):
-        d = M26Distance()
+        d = Distance()
         self.assertTrue(d.value == 0,  "value should be 0")
         self.assertTrue(d.uom  == 'm', "uom should be 'm'")
 
-        d = M26Distance(26.2)
+        d = Distance(26.2)
         self.assertTrue(d.value == 26.2, "value should be 26.2")
         self.assertTrue(d.uom  == 'm', "uom should be 'm'")
 
@@ -32,11 +32,11 @@ class M26DistanceTest(unittest.TestCase):
         self.assertAlmostEqual(d.as_yards(),      46112.0)
 
     def test_constructor_kilometers(self):
-        d = M26Distance(50.0, 'k')
+        d = Distance(50.0, 'k')
         self.assertTrue(d.value == 50.0, "value should be 50.0")
         self.assertTrue(d.uom  == 'k', "uom should be 'k'")
 
-        d = M26Distance(10, ' K ')
+        d = Distance(10, ' K ')
         self.assertTrue(d.value == 10.0, "value should be 10.0")
         self.assertTrue(d.uom  == 'k', "uom should be 'k'")
 
@@ -49,11 +49,11 @@ class M26DistanceTest(unittest.TestCase):
         self.assertAlmostEqual(d.as_yards(),      10936.132983377078)
 
     def test_constructor_yards(self):
-        d = M26Distance(3600.0, 'y')
+        d = Distance(3600.0, 'y')
         self.assertTrue(d.value == 3600.0, "value should be 3600.0")
         self.assertTrue(d.uom == 'y', "uom should be 'y'")
 
-        d = M26Distance(1800.0, ' Y ')
+        d = Distance(1800.0, ' Y ')
         self.assertTrue(d.value == 1800.0, "value should be 1800.0")
         self.assertTrue(d.uom == 'y', "uom should be 'y'")
 
@@ -66,10 +66,10 @@ class M26DistanceTest(unittest.TestCase):
         self.assertAlmostEqual(d.as_yards(),      1800.000000)
 
     def test_add(self):
-        d1 = M26Distance(26.2, 'm')
-        d2 = M26Distance(4.8, 'm')
-        d3 = M26Distance(5.0, 'k')
-        d4 = M26Distance(1800, 'y')
+        d1 = Distance(26.2, 'm')
+        d2 = Distance(4.8, 'm')
+        d3 = Distance(5.0, 'k')
+        d4 = Distance(1800, 'y')
 
         d1.add(d2)
         self.assertAlmostEqual(d1.value, 31.0)
@@ -83,10 +83,10 @@ class M26DistanceTest(unittest.TestCase):
         self.assertTrue(d1.uom == 'm', "uom should be 'm'")
 
     def test_subtract(self):
-        d1 = M26Distance(26.2, 'm')
-        d2 = M26Distance(4.8, 'm')
-        d3 = M26Distance(5.0, 'k')
-        d4 = M26Distance(1800, 'y')
+        d1 = Distance(26.2, 'm')
+        d2 = Distance(4.8, 'm')
+        d3 = Distance(5.0, 'k')
+        d4 = Distance(1800, 'y')
 
         d1.subtract(d2)
         self.assertAlmostEqual(d1.value, 21.4)

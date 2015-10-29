@@ -2,14 +2,14 @@ __author__ = 'cjoakim'
 
 import math
 
-from .m26_elapsed_time import M26ElapsedTime
+from .elapsed_time import ElapsedTime
 
 
-class M26Speed(object):
+class Speed(object):
 
     def __init__(self, d, et):
-        self.dist = d    # an instance of M26Distance
-        self.etime = et  # an instance of M26ElapsedTime
+        self.dist = d    # an instance of Distance
+        self.etime = et  # an instance of ElapsedTime
 
     def mph(self):
         return self.dist.as_miles() / self.etime.hours()
@@ -44,15 +44,15 @@ class M26Speed(object):
             d1 = self.dist.as_miles()
             d2 = another_distance.as_miles()
             t2 = t1 * math.pow(float(d2 / d1), float(1.06))
-            et = M26ElapsedTime(t2)
+            et = ElapsedTime(t2)
             return et.as_hhmmss()
         else:
             secs = float(self.seconds_per_mile() * another_distance.as_miles())
-            et = M26ElapsedTime(secs)
+            et = ElapsedTime(secs)
             return et.as_hhmmss()
 
     def age_graded(self, event_age, graded_age):
         ag_factor = event_age.max_pulse() / graded_age.max_pulse()
         graded_secs = float((self.etime.secs)) * float(ag_factor)
-        graded_et = M26ElapsedTime(graded_secs)
-        return M26Speed(self.dist, graded_et)
+        graded_et = ElapsedTime(graded_secs)
+        return Speed(self.dist, graded_et)

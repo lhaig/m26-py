@@ -12,27 +12,17 @@ from m26.elapsed_time import ElapsedTime
 from m26.run_walk_calculator import RunWalkCalculator
 from m26.speed import Speed
 
-lines = list()
-with open('examples.py') as f:
-    for line in f:
-        lines.append(line)
-lines.append('')
-lines.append('')
-
-def lprint(line_num, s):
-    print(lines[line_num + 1])
-    print("{0} >>> {1}".format(line_num, s))
-
 if __name__ == "__main__":
 
     d1 = Distance(26.2)
-    lprint(inspect.getlineno(inspect.currentframe()), d1)
-    lprint(inspect.getlineno(inspect.currentframe()), "d1, as_miles:      {0}".format(d1.as_miles()))
-    lprint(inspect.getlineno(inspect.currentframe()), "d1, as_kilometers: {0}".format(d1.as_kilometers()))
-    lprint(inspect.getlineno(inspect.currentframe()), "d1, as_yards:      {0}".format(d1.as_yards()))
+    print(d1)
+    print("d1, as_miles:      {0}".format(d1.as_miles()))
+    print("d1, as_kilometers: {0}".format(d1.as_kilometers()))
+    print("d1, as_yards:      {0}".format(d1.as_yards()))
 
+    print('')
     d2 = Distance(50.0, Constants.uom_kilometers())
-    lprint(inspect.getlineno(inspect.currentframe()), d2)
+    print(d2)
     print("d2, as_miles:      {0}".format(d2.as_miles()))
     print("d2, as_kilometers: {0}".format(d2.as_kilometers()))
     print("d2, as_yards:      {0}".format(d2.as_yards()))
@@ -94,5 +84,5 @@ if __name__ == "__main__":
 
     print('')
     result = RunWalkCalculator.calculate('2:30', '9:16', '0:45', '17:00', 31.0)
-    lprint(inspect.getlineno(inspect.currentframe()), result)
+    print(result)
     print('')

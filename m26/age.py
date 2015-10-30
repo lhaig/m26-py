@@ -37,3 +37,7 @@ class Age(object):
             data['pulse'] = self.max_pulse() * pct
             results.append(data)
         return results
+
+
+    def __str__(self):
+        return "<Age value:{0}>".format(self.value)

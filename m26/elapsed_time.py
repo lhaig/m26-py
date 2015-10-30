@@ -68,3 +68,7 @@ class ElapsedTime(object):
             return "0{0}".format(int(n))
         else:
             return "{0}".format(int(n))
+
+    def __str__(self):
+        template = "<ElapsedTime hh:{0} mm:{1} ss:{2} secs:{3}>"
+        return template.format(self.hh, self.mm, self.ss, self.secs)

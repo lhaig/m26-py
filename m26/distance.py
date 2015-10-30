@@ -66,3 +66,6 @@ class Distance(object):
             self.value = self.value - another_instance.as_kilometers()
         else:
             self.value = self.value - another_instance.as_yards()
+
+    def __str__(self):
+        return "<Distance value:{0} uom:{1}>".format(self.value, self.uom)

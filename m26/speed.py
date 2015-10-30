@@ -56,3 +56,7 @@ class Speed(object):
         graded_secs = float((self.etime.secs)) * float(ag_factor)
         graded_et = ElapsedTime(graded_secs)
         return Speed(self.dist, graded_et)
+
+    def __str__(self):
+        template = "<Speed dist:{0} etime:{1}>"
+        return template.format(self.dist, self.etime)

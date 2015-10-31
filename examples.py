@@ -1,4 +1,6 @@
 
+import json
+
 import m26
 
 if __name__ == "__main__":
@@ -12,16 +14,10 @@ if __name__ == "__main__":
     print('')
     d2 = m26.Distance(50.0, m26.Constants.uom_kilometers())
     print(d2)
-    print("d2, as_miles:      {0}".format(d2.as_miles()))
-    print("d2, as_kilometers: {0}".format(d2.as_kilometers()))
-    print("d2, as_yards:      {0}".format(d2.as_yards()))
 
     print('')
     d3 = m26.Distance(7040, m26.Constants.uom_yards())
     print(d3)
-    print("d3, as_miles:      {0}".format(d3.as_miles()))
-    print("d3, as_kilometers: {0}".format(d3.as_kilometers()))
-    print("d3, as_yards:      {0}".format(d3.as_yards()))
 
     print('')
     d4 = m26.Distance(10.0, m26.Constants.uom_kilometers())
@@ -54,10 +50,14 @@ if __name__ == "__main__":
     print("s, spm: {0}".format(s.seconds_per_mile()))
     print("s, ppm: {0}".format(s.pace_per_mile()))
 
-    hhmmss_simple = s.projected_time(d2)
+    hhmmss_simple = s.projected_time(d2, 'simple')
     hhmmss_riegel = s.projected_time(d2, 'riegel')
     print("projected_time, simple: {0}".format(hhmmss_simple))
     print("projected_time, riegel: {0}".format(hhmmss_riegel))
+
+    print('')
+    result = m26.RunWalkCalculator.calculate('2:30', '9:16', '0:45', '17:00', 31.0)
+    print(json.dumps(result, sort_keys=True, indent=2))
 
     print('')
     a = m26.AgeCalculator.calculate('1960-10-01', '2015-10-18')
@@ -66,12 +66,8 @@ if __name__ == "__main__":
     print('')
     a2 = m26.Age(58.1)
     graded = s.age_graded(a, a2)
-    print("age graded: {0} {1} -> {2} {3}".format(
-        t1.as_hhmmss(), a.value, graded.etime.as_hhmmss(), a2.value))
-    zones = a2.training_zones()
-    print(zones)
+    print(graded)
 
-    print('')
-    result = m26.RunWalkCalculator.calculate('2:30', '9:16', '0:45', '17:00', 31.0)
-    print(result)
+    zones = a2.training_zones()
+    print(json.dumps(zones, sort_keys=True, indent=2))
     print('')

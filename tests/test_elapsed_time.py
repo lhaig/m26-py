@@ -1,9 +1,7 @@
 
-import os
-import time
 import unittest
 
-from m26.elapsed_time import ElapsedTime
+import m26
 
 
 class ElapsedTimeTest(unittest.TestCase):
@@ -15,7 +13,7 @@ class ElapsedTimeTest(unittest.TestCase):
         pass
 
     def test_constructor_with_number(self):
-        t = ElapsedTime(3665)
+        t = m26.ElapsedTime(3665)
         self.assertAlmostEqual(t.hh,      1.0000)
         self.assertAlmostEqual(t.mm,      1.0000)
         self.assertAlmostEqual(t.ss,      5.0000)
@@ -24,7 +22,7 @@ class ElapsedTimeTest(unittest.TestCase):
         self.assertTrue(t.as_hhmmss() == '01:01:05', "as_hhmmss is incorrect")
 
     def test_constructor_with_string(self):
-        t = ElapsedTime('3:47:30')
+        t = m26.ElapsedTime('3:47:30')
         self.assertAlmostEqual(t.hh,      3.0000)
         self.assertAlmostEqual(t.mm,      47.0000)
         self.assertAlmostEqual(t.ss,      30.0000)
@@ -33,7 +31,7 @@ class ElapsedTimeTest(unittest.TestCase):
         self.assertTrue(t.as_hhmmss() == '03:47:30', "as_hhmmss is incorrect")
 
     def test_constructor_with_empty_string(self):
-        t = ElapsedTime('')
+        t = m26.ElapsedTime('')
         self.assertAlmostEqual(t.hh,      0.0000)
         self.assertAlmostEqual(t.mm,      0.0000)
         self.assertAlmostEqual(t.ss,      00.0000)
@@ -42,7 +40,7 @@ class ElapsedTimeTest(unittest.TestCase):
         self.assertTrue(t.as_hhmmss() == '00:00:00', "as_hhmmss is incorrect")
 
     def test_constructor_with_malformed_string(self):
-        t = ElapsedTime('3:xx:q')
+        t = m26.ElapsedTime('3:xx:q')
         self.assertAlmostEqual(t.hh,      3.0000)
         self.assertAlmostEqual(t.mm,      0.0000)
         self.assertAlmostEqual(t.ss,      0.0000)

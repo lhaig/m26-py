@@ -1,7 +1,8 @@
+
 import json
 import unittest
 
-from m26.run_walk_calculator import RunWalkCalculator
+import m26
 
 
 class RunWalkCalculatorTest(unittest.TestCase):
@@ -22,7 +23,7 @@ class RunWalkCalculatorTest(unittest.TestCase):
         walk_ppm = '18:00'
         miles = '3.333'
 
-        result = RunWalkCalculator.calculate(run_hhmmss, run_ppm, walk_hhmmss, walk_ppm, miles)
+        result = m26.RunWalkCalculator.calculate(run_hhmmss, run_ppm, walk_hhmmss, walk_ppm, miles)
         self.log_result(result)
 
         self.assertAlmostEqual(result['avg_mph'], 3.33333333)
@@ -43,7 +44,7 @@ class RunWalkCalculatorTest(unittest.TestCase):
         walk_ppm = '18:00'
         miles = '3.333'
 
-        result = RunWalkCalculator.calculate(run_hhmmss, run_ppm, walk_hhmmss, walk_ppm, miles)
+        result = m26.RunWalkCalculator.calculate(run_hhmmss, run_ppm, walk_hhmmss, walk_ppm, miles)
         self.log_result(result)
 
         self.assertAlmostEqual(result['avg_mph'], 6.66666666)
@@ -64,7 +65,7 @@ class RunWalkCalculatorTest(unittest.TestCase):
         walk_ppm = '16:00'
         miles = '4.0'
 
-        result = RunWalkCalculator.calculate(run_hhmmss, run_ppm, walk_hhmmss, walk_ppm, miles)
+        result = m26.RunWalkCalculator.calculate(run_hhmmss, run_ppm, walk_hhmmss, walk_ppm, miles)
         self.log_result(result)
 
         self.assertAlmostEqual(result['avg_mph'], 5.0000000)
@@ -85,7 +86,7 @@ class RunWalkCalculatorTest(unittest.TestCase):
         walk_ppm = '18:00'
         miles = '26.2'
 
-        result = RunWalkCalculator.calculate(run_hhmmss, run_ppm, walk_hhmmss, walk_ppm, miles)
+        result = m26.RunWalkCalculator.calculate(run_hhmmss, run_ppm, walk_hhmmss, walk_ppm, miles)
         self.log_result(result)
 
         self.assertAlmostEqual(result['avg_mph'], 6.0606060606060606)

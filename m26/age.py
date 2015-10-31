@@ -38,6 +38,8 @@ class Age(object):
             results.append(data)
         return results
 
-
     def __str__(self):
         return "<Age value:{0}>".format(self.value)
+
+    def __repr__(self):
+        return self.__str__()

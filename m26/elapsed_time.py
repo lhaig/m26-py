@@ -9,12 +9,14 @@ from .constants import Constants
 
 class ElapsedTime(object):
 
-    def __init__(self, val='00:00:00'):
+    def __init__(self, val):
         self.secs = 0
         self.hh = 0
         self.mm = 0
         self.ss = 0
 
+        if not val:
+            val = 0
         if isinstance(val, Number):
             self.initialize_from_number(val)
         elif isinstance(val, str):
@@ -72,3 +74,6 @@ class ElapsedTime(object):
     def __str__(self):
         template = "<ElapsedTime hh:{0} mm:{1} ss:{2} secs:{3}>"
         return template.format(self.hh, self.mm, self.ss, self.secs)
+
+    def __repr__(self):
+        return self.__str__()

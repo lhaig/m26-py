@@ -60,3 +60,6 @@ class Speed(object):
     def __str__(self):
         template = "<Speed dist:{0} etime:{1}>"
         return template.format(self.dist, self.etime)
+
+    def __repr__(self):
+        return self.__str__()

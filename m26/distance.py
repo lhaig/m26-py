@@ -69,3 +69,6 @@ class Distance(object):
 
     def __str__(self):
         return "<Distance value:{0} uom:{1}>".format(self.value, self.uom)
+
+    def __repr__(self):
+        return self.__str__()

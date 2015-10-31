@@ -1,5 +1,5 @@
 __author__ = 'cjoakim'
-__version__ = '0.0.6'
+__version__ = '0.1.0'
 
 """
 m26 library
@@ -376,4 +376,4 @@ class Speed(object):
         return self.__str__()
 
 
-# generated on 2015-10-31 07:23:49.450934
+# built on 2015-10-31 15:04:18.352176

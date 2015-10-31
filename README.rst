@@ -157,6 +157,15 @@ Use:
 
 
 Source Code
------------
+===========
 
 See `m26-py at GitHub <https://github.com/cjoakim/m26-py>`_ .
+
+
+Changelog
+=========
+
+Version 0.1.0
+-------------
+
+-  2015/10/31. Initial Production release.

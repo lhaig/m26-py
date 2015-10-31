@@ -32,13 +32,13 @@ class Builder(object):
                 f.write("%s\n" % key)
             for line in self.code_lines:
                 f.write("%s\n" % line)
-            f.write("\n\n# generated on {0}\n".format(datetime.datetime.now()))
+            f.write("\n\n# built on {0}\n".format(datetime.datetime.now()))
             print('file written {0}'.format(self.outfile))
 
     def header_lines(self):
         lines = list()
         lines.append("__author__ = 'cjoakim'")
-        lines.append("__version__ = '0.0.6'")
+        lines.append("__version__ = '0.1.0'")
         lines.append("")
         lines.append('"""')
         lines.append("m26 library")

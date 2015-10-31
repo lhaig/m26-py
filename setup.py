@@ -15,7 +15,7 @@ setup(
     name='m26',
 
     # Versions should comply with PEP440.
-    version='0.0.6',
+    version='0.1.0',
 
     description='m26 is a python library for speed and pace calculations for sports like running and cycling',
     long_description=long_description,
@@ -34,7 +34,7 @@ setup(
         #   3 - Alpha
         #   4 - Beta
         #   5 - Production/Stable
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 5 - Production/Stable',
 
         'Intended Audience :: Developers',
         'Topic :: Utilities',
@@ -46,7 +46,7 @@ setup(
         'Programming Language :: Python :: 3.5',
     ],
 
-    keywords='calculator running cycling swimming pace-per-mile mph',
+    keywords='calculator running cycling swimming pace-per-mile mph age-grading',
 
     # You can just specify the packages manually here if your project is simple.
     # Or you can use find_packages().

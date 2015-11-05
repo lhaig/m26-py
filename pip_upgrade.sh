@@ -5,13 +5,13 @@
 
 source bin/activate
 
-pip install --upgrade pip
-pip install --upgrade pip-tools
+pip3 install --upgrade pip
+pip3 install --upgrade pip-tools
 
 pip-compile requirements.in
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 pip-sync
 
-pip list > pip_list.txt
+pip3 list > pip_list.txt
 
 echo 'done'

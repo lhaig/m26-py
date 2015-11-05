@@ -1,0 +1,6 @@
+pip
+arrow
+check-manifest
+coverage
+flake8
+nose

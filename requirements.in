@@ -4,3 +4,5 @@ check-manifest
 coverage
 flake8
 nose
+Sphinx
+rstcheck

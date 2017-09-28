@@ -8,7 +8,7 @@ alabaster==0.7.6          # via sphinx
 arrow==0.7.0
 babel==2.1.1              # via sphinx
 check-manifest==0.27
-coverage==4.0.2
+coverage==4.0.2           # via pytest-cov
 docutils==0.12            # via rstcheck, sphinx
 flake8==2.5.0
 jinja2==2.8               # via sphinx

@@ -15,7 +15,7 @@ setup(
     name='m26',
 
     # Versions should comply with PEP440.
-    version='0.1.0',
+    version='0.2.0',
 
     description='m26 is a python library for speed and pace calculations for sports like running and cycling',
     long_description=long_description,
@@ -50,15 +50,15 @@ setup(
 
     # You can just specify the packages manually here if your project is simple.
     # Or you can use find_packages().
-    packages=find_packages(exclude=['bin', 'contrib', 'coverage', 'data', 'docs', 'tests*']),
+    packages=find_packages(exclude=['bin', 'contrib', 'htmlcov', 'data', 'docs', 'tests*']),
 
     # Run-time dependencies; these will be installed by pip when the project is installed.
     # See https://packaging.python.org/en/latest/requirements.html
-    # install_requires=['xxx'],
+    install_requires=['arrow'],
 
     # Dev and Test dependencies, install like this: $ pip install -e .[dev,test]
     extras_require={
         'dev':  ['check-manifest', 'flake8'],
-        'test': ['coverage'],
+        'test': ['coverage', 'pytest', 'pytest-cov'],
     },
 )

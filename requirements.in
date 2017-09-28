@@ -3,7 +3,6 @@ arrow
 check-manifest
 coverage
 flake8
-nose
 pytest
 pytest-cov
 rstcheck

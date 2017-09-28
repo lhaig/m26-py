@@ -165,7 +165,8 @@ See `m26-py at GitHub <https://github.com/cjoakim/m26-py>`_ .
 Changelog
 =========
 
-Version 0.1.0
+Version 0.2.0
 -------------
 
+-  2017/09/27. Version 0.2.0,  Converted to the pytest testing framework.
 -  2015/10/31. Initial Production release.

@@ -2,7 +2,8 @@
 
     <description>
         Ant script to create a zip file backup of this project.
-        Chris Joakim, 2015/10/18
+        ant -f backup.xml
+        Chris Joakim, 2017/09/28
     </description>
 
     <!-- These are the only properties you should have to change.  -->
@@ -49,7 +50,7 @@
 
         <zip zipfile="${_zipFilename}"
              basedir="${_projectDir}"
-             excludes=".git/, .idea/, bin/, log/, tmp/, **/txt_merged.txt, **/*.gz, **/*.zip" />
+             excludes=".cache/, .git/, .idea/, bin/, include/, lib/, log/, man/, tmp/, **/*.pyc, **/txt_merged.txt, **/*.gz, **/*.zip" />
 
         <echo message="done" />
     </target>

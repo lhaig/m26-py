@@ -1,7 +1,9 @@
 # Manually added entries
 
 bin/
-
+log/
+man/
+tmp/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

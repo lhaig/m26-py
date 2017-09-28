@@ -34,9 +34,7 @@ class ElapsedTime(object):
         stripped = str(val).strip()
         if len(stripped) > 0:
             tokens = stripped.split(':')
-            if len(tokens) == 0:
-                pass
-            elif len(tokens) == 1:
+            if len(tokens) == 1:
                 self.ss = self.to_float(tokens[0])
             elif len(tokens) == 2:
                 self.mm = self.to_float(tokens[0])
@@ -74,6 +72,3 @@ class ElapsedTime(object):
     def __str__(self):
         template = "<ElapsedTime hh:{0} mm:{1} ss:{2} secs:{3}>"
         return template.format(self.hh, self.mm, self.ss, self.secs)
-
-    def __repr__(self):
-        return self.__str__()

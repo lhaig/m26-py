@@ -15,3 +15,7 @@ def test_calculate():
     actual = 54.997946611909654
     assert(a1.value > (actual - 0.000001))
     assert(a1.value < (actual + 0.000001))
+
+def test_calculate_no_birthdate():
+    a1 = m26.AgeCalculator.calculate(None, '2015-10-01')
+    assert(a1 == None)

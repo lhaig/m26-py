@@ -58,7 +58,7 @@ def test_constructor_yards():
     assert_almost_equal(d.as_kilometers(), 1.64592)
     assert_almost_equal(d.as_yards(),      1800.000000)
 
-def test_add():
+def test_add_to_miles():
     d1 = m26.Distance(26.2, 'm')
     d2 = m26.Distance(4.8, 'm')
     d3 = m26.Distance(5.0, 'k')
@@ -75,7 +75,23 @@ def test_add():
     assert_almost_equal(d1.value, 35.12958323391394)
     assert(d1.uom == 'm')
 
-def test_subtract():
+def test_add_to_kilometers():
+    d1 = m26.Distance(10.0, 'k')
+    d2 = m26.Distance(3.1, 'm')
+
+    d1.add(d2)
+    assert(d1.uom == 'k')
+    assert_almost_equal(d1.value, 14.9889664)
+
+def test_add_to_yards():
+    d1 = m26.Distance(1800, 'y')
+    d2 = m26.Distance(1.0, 'm')
+
+    d1.add(d2)
+    assert(d1.uom == 'y')
+    assert_almost_equal(d1.value, 3560.0)
+
+def test_subtract_from_miles():
     d1 = m26.Distance(26.2, 'm')
     d2 = m26.Distance(4.8, 'm')
     d3 = m26.Distance(5.0, 'k')
@@ -91,3 +107,19 @@ def test_subtract():
     d1.subtract(d4)
     assert_almost_equal(d1.value, 17.270416766086054)
     assert(d1.uom == 'm')
+
+def test_subtract_from_kilometers():
+    d1 = m26.Distance(10.0, 'k')
+    d2 = m26.Distance(3.1, 'm')
+
+    d1.subtract(d2)
+    assert(d1.uom == 'k')
+    assert_almost_equal(d1.value, 5.011033599999999)
+
+def test_subtract_from_yards():
+    d1 = m26.Distance(3600, 'y')
+    d2 = m26.Distance(1.0, 'm')
+
+    d1.subtract(d2)
+    assert(d1.uom == 'y')
+    assert_almost_equal(d1.value, 1840.0)

@@ -16,6 +16,7 @@ def test_a_walk_with_round_numbers():
     assert_almost_equal(s.yph(), 7040.0000)
     assert_almost_equal(s.seconds_per_mile(), 900.0)
     assert(s.pace_per_mile() == '15:00.0')
+    assert(str(s) == '<Speed dist:<Distance value:2.0 uom:m> etime:<ElapsedTime hh:0 mm:30.0 ss:0.0 secs:1800.0>>')
 
 def test_a_marathon_with_fractional_numbers():
     d = m26.Distance(26.2)

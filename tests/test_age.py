@@ -47,3 +47,7 @@ def test_training_zones():
 
     assert(z4['pct_max'] == 0.75)
     assert(z4['pulse']   == 121.5)
+
+def test_str():
+    a = m26.Age(58.0)
+    assert(str(a) == '<Age value:58.0>')
